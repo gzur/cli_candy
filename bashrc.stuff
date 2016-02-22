@@ -1,0 +1,49 @@
+# Screen size shenanigans
+xrandr --newmode "1920x1200p"  193.16  1920 2048 2256 2592  1200 1201 1204 1242  -HSync +Vsync > /dev/null 2>&1
+xrandr --newmode "1920x1080p"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync > /dev/null 2>&1
+# For portrait mode
+xrandr --newmode "1200x1920p"  196.47  1200 1296 1424 1648  1920 1921 1924 1987  -HSync +Vsync > /dev/null 2>&1
+
+xrandr --addmode VGA-1 1920x1080p
+xrandr --addmode VGA-1 1920x1200p
+xrandr --addmode VGA-0 1920x1080p
+xrandr --addmode VGA-0 1920x1200p
+# add portrait mode
+xrandr --addmode VGA-1 1200x1920p
+xrandr --addmode VGA-0 1200x1920p
+
+#set dual monitors
+dual(){
+   xrandr --output VGA-0 --primary --left-of VGA-1 --output VGA-1 --mode 1920x1080p
+}
+dual_large(){
+    xrandr --output VGA-0 --primary --left-of VGA-1 --output VGA-1 --mode 1920x1200p
+}
+# set protrait mode on VGA-1
+portrait_mon() {
+   xrandr --output VGA-1 --mode 1200x1920p
+#   xrandr --output VGA-0 --primary --left-of VGA-1 --output VGA-1 --mode 1200x1920p
+}
+#
+# set single monitor
+single () {
+   xrandr --output VGA-1 --off
+}
+#
+# set small monitor resolutiion
+small_mon () {
+   xrandr --output VGA-0 --mode  1920x1080p
+}
+large_mon () {
+   xrandr --output VGA-0 --mode  1920x1200p
+}
+shopt -s histappend
+HISTFILESIZE=1000000
+HISTSIZE=1000000
+HISTCONTROL=ignoreboth
+HISTIGNORE='bg:fg:history'
+HISTTIMEFORMAT='%F %T '
+shopt -s cmdhist
+PROMPT_COMMAND='history -a'
+bind -f ~/.inputrc
+
